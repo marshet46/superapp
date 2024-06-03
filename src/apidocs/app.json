@@ -1,0 +1,242 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Super App API",
+      "version": "1.0.0",
+      "description": "API documentation for the Super App"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3001/api"
+      }
+    ],
+    "paths": {
+      "/app": {
+        "post": {
+          "summary": "Create a new app",
+          "tags": ["Apps"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "logo": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "The app was successfully created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/App"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        },
+        "get": {
+          "summary": "Returns the list of all the apps",
+          "tags": ["Apps"],
+          "responses": {
+            "200": {
+              "description": "The list of the apps",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/App"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/app/{id}": {
+        "get": {
+          "summary": "Get the app by id",
+          "tags": ["Apps"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "The app id"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "The app description by id",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/App"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "The app was not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update the app by the id",
+          "tags": ["Apps"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "The app id"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "logo": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "The app was updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/App"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "The app was not found"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Remove the app by id",
+          "tags": ["Apps"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "The app id"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "The app was deleted"
+            },
+            "404": {
+              "description": "The app was not found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "App": {
+          "type": "object",
+          "required": ["name", "url"],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The auto-generated ID of the app"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the app"
+            },
+            "logo": {
+              "type": "string",
+              "description": "The URL of the app's logo"
+            },
+            "url": {
+              "type": "string",
+              "description": "The URL of the app"
+            },
+            "description": {
+              "type": "string",
+              "description": "The description of the app"
+            },
+            "category": {
+              "type": "string",
+              "description": "The category of the app"
+            }
+          },
+          "example": {
+            "id": 1,
+            "name": "Sample App",
+            "logo": "/uploads/1623456789012_logo.png",
+            "url": "https://example.com",
+            "description": "This is a sample app",
+            "category": "Utilities"
+          }
+        }
+      }
+    }
+  }
+  
